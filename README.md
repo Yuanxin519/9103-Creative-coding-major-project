@@ -19,14 +19,14 @@ We also drew inspiration from generative art practices that reconstruct images t
 - `calculateImageDrawProps()` keeps the image correctly fitted at any window size; `windowResized()` rebuilds the grid automatically.
 
 ### Time-Based Mechanic
-- frameCount drives a repeating cycle: 6 seconds idle → wave transition → 6 seconds idle.
+- `frameCount` drives a repeating cycle: 6 seconds idle → wave transition → 6 seconds idle.
 
-- The pattern elapsed % interval === tileIndex activates one column (or row) strip per frame, creating a rolling left-to-right or top-to-bottom wipe.
+- The pattern `elapsed % interval === tileIndex` activates one column (or row) strip per frame, creating a rolling left-to-right or top-to-bottom wipe.
 
-- Direction alternates each cycle between column wave and row wave using !useColumns.
+- Direction alternates each cycle between column wave and row wave using `!useColumns`.
 
-- lerp(flipProgress, target, 0.95) gives each strip a fast, smooth colour snap.
-drawCountdown() shows a live second counter with push() / pop() to isolate text styling.
+- `lerp(flipProgress, target, 0.95)` gives each strip a fast, smooth colour snap.
+`drawCountdown()` shows a live second counter with `push()` / `pop()` to isolate text styling.
 
 ### User Input Mechanic
 - dist(`mouseX`, `mouseY`, `cx`, `cy`) finds tiles within HOVER_RADIUS (80px) of the cursor each frame.
@@ -38,13 +38,13 @@ drawCountdown() shows a live second counter with push() / pop() to isolate text 
 - Setting `tile.flipped = true` triggers `updateFlipProgress()`, revealing The Kiss under the cursor.
 
 ### Audio Mechanic
-- fft.analyze() returns 128 frequency-band energy values each frame; each tile maps to one frequency bin.
+- `fft.analyze()` returns 128 frequency-band energy values each frame; each tile maps to one frequency bin.
 
-- Energy values scale displaySize upward via lerp(), making circles pulse with the music.
+- Energy values scale displaySize upward via `lerp()`, making circles pulse with the music.
 
-- mouseMoved() maps mouse Y to volume and mouse X to stereo pan via song.setVolume() and song.pan().
+- `mouseMoved()` maps mouse Y to volume and mouse X to stereo pan via `song.setVolume()` and `song.pan()`.
 
-- A createButton() Play / Pause button lets the viewer start or stop the music at any time.
+- A `createButton() Play / Pause button` lets the viewer start or stop the music at any time.
 
 ## Mechanic Ownership
 
