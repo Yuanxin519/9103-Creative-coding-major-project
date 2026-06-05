@@ -68,13 +68,6 @@ We used AI (mainly Claude) as a support tool to help integrate my audio mechanic
 Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
 
-Claude was used to assist in the development of the User Input mechanic. Specifically, Claude helped generate the initial implementation of the tile interaction system, including mouse-distance detection, ripple-based scaling effects, and interpolation (`lerp`) for smooth size transitions. Claude also assisted with code commenting and debugging during development.
-
-AI-assisted sections are identified within the source code using comments such as:
-
-// This code was generated with the help of Claude
-
-
 ## External References
 Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing: 
 https://editor.p5js.org/chrsgrbr/sketches/mLNDLCYys
