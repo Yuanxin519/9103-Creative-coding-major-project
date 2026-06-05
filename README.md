@@ -6,8 +6,16 @@ We also drew inspiration from generative art practices that reconstruct images t
 
 ## Techniques
 
-### Image Mosaic
-Your text...
+### Image Mosaic (PerlinNoise)
+- A double for loop divides the canvas into a grid, creating one tile object per cell via tiles.push({...}).
+
+- img.get(x, y) samples pixel colour from both paintings, storing colourAdele and colourKiss in each tile.
+
+- Circle size is driven by pixel brightness; noise() adds organic variation so the grid feels hand-crafted rather than mechanical.
+
+- flipProgress (0–1) is the shared property all four mechanics use to blend between the two paintings via lerp().
+
+- calculateImageDrawProps() keeps the image correctly fitted at any window size; windowResized() rebuilds the grid automatically.
 
 ### Time-Based Mechanic
 Your text...
