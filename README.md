@@ -81,8 +81,11 @@ Handles the sound layer of the project. A background music track is loaded and c
 We used AI (mainly Claude) as a support tool to help integrate my audio mechanic with the other team members’ modules. At first, my audio code worked on its own but failed when combined with the PerlinNoise, TimeBased, and UserInput systems. AI helped me identify the cause of the conflict and suggested adjustments to the order of function calls and initialisation, which resolved the issue and allowed all mechanics to run together smoothly. AI also assisted in simplifying parts of my script, making the final Audio.js cleaner and easier to maintain.
 Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
+Claude code was used to assist in developing the time-based mechanic. The state-machine structure managing `transitionActive`, `idleStart`, and `showingKiss`, and the wave-timing pattern `elapsed % interval === tileIndex` that drives the column and row wave transition were designed with Claude's assistance.
+
 Claude was used to assist in the development of the User Input mechanic. Specifically, Claude helped generate the initial implementation of the tile interaction system, including mouse-distance detection, ripple-based scaling effects, and interpolation for smooth size transitions. Claude also assisted with code commenting and debugging during development.
 AI-assisted sections are identified within the source code using comments such as: // This code was generated with the help of Claude
+
 
 
 ## External References
