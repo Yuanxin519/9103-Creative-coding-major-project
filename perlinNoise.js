@@ -40,6 +40,7 @@ function setup() {
 
   // Build all the tiles and store them in the array
   buildTiles();
+  initUserInput();
 }
 
 // This function works out how to fit the image onto the canvas while keeping its proportions
@@ -70,7 +71,8 @@ function calculateImageDrawProps() {
 
 function draw() {
   background(20);
-
+  updateFlipProgress();
+  updateUserInput();
   // Loop through every tile and draw it
   for (let i = 0; i < tiles.length; i++) {
     drawTile(tiles[i]);
