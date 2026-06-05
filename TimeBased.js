@@ -5,7 +5,7 @@ let transitionActive = false;
 let transitionStart  = 0;
 let showingKiss      = false;  // false = Adele on screen, true = The Kiss on screen
 let idleStart        = 0;      // frameCount when the current idle period began
-let useColumns       = true;   // true = L to R column wave, false = T to B row wave
+let useColumns       = true;   // true = L to R column flip, false = T to B row flip
 
 const IDLE_FRAMES = 360;  // 6 seconds at 60 fps before each switch
 const CYCLE_COUNT = 1;    // one full sweep per transition (3 sec)
@@ -18,21 +18,22 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  colorMode(RGB, 255);
   noStroke();
-  // Normalize both images first so sampling and aspect ratio use the same dimensions
+
   imgAdele.resize(800, 0);
   imgKiss.resize(800, 0);
+
   calculateImageDrawProps();
   buildTiles();
-  initUserInput();
+  initUserInput();  // set up mouse for animation control
 }
 
 function draw() {
   background(20);
   updateTimeBased();
-  updateUserInput();
-  // for...of traversal draws every tile each frame
+  updateUserInput(); 
+
+  // for...of draws every tile each frame
   for (let tile of tiles) {
     drawTile(tile);
   }
@@ -41,7 +42,7 @@ function draw() {
 
 // Fit the image onto the canvas while keeping its aspect ratio
 function calculateImageDrawProps() {
-  let aspect       = imgAdele.width / imgAdele.height;
+  let aspect = imgAdele.width / imgAdele.height;
   let canvasAspect = width / height;
 
   if (aspect > canvasAspect) {
@@ -55,7 +56,8 @@ function calculateImageDrawProps() {
     imgDrawX = (width - imgDrawW) / 2;
     imgDrawY = 0;
   }
-  // Number of tile strips that fit inside the image draw area
+  
+  // Calculate how many tile columns and rows fit in the draw area
   numCols = floor(imgDrawW / tileSize);
   numRows = floor(imgDrawH / tileSize);
 }
@@ -66,6 +68,7 @@ function buildTiles() {
 
   for (let x = imgDrawX; x < imgDrawX + imgDrawW; x += tileSize) {
     for (let y = imgDrawY; y < imgDrawY + imgDrawH; y += tileSize) {
+      
       let imgX = floor(map(x, imgDrawX, imgDrawX + imgDrawW, 0, imgAdele.width));
       let imgY = floor(map(y, imgDrawY, imgDrawY + imgDrawH, 0, imgAdele.height));
       imgX = constrain(imgX, 0, imgAdele.width  - 1);
@@ -86,13 +89,13 @@ function buildTiles() {
       let gShift = random(-10, 10);
       let bShift = random(-8, 8);
 
-      // Derive col/row index from pixel position for the wave transition
+      // Derive col/row index from pixel position for the flip transition
       let col = floor((x - imgDrawX) / tileSize);
       let row = floor((y - imgDrawY) / tileSize);
 
       tiles.push({
         x, y,
-        col, row,                  // col = L→R wave index, row = T→B wave index
+        col, row,                  // col = L→R flip index, row = T→B flip index
         drawnSize:    cellSize,
         colourAdele:  colourFromAdele,
         colourKiss:   colourFromKiss,
@@ -169,7 +172,7 @@ function drawCountdown() {
   noStroke();
   fill(255, 255, 255, 180);
   textAlign(RIGHT, BOTTOM);
-  textSize(18);
+  textSize(20);
   text(secsLeft, width - 20, height - 20);
   pop();
 }
@@ -181,3 +184,6 @@ function windowResized() {
   buildTiles();
   initUserInput();
 }
+
+
+
