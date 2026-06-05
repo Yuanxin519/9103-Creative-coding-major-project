@@ -1,54 +1,38 @@
-// Works out the position and size to draw the image
-// so it fits the canvas without stretching
+// This function works out how to fit the image onto the canvas while keeping its proportions
+// This is the same approach used in the tutorial code for image display
 function calculateImageDrawProps() {
   let aspect = imgAdele.width / imgAdele.height;
   let canvasAspect = width / height;
  
   if (aspect > canvasAspect) {
-    // Image is wider than the canvas, so fit it to the canvas width
+    // Image is wider than canvas — fit to width
     imgDrawW = width;
     imgDrawH = width / aspect;
     imgDrawX = 0;
     imgDrawY = (height - imgDrawH) / 2;
   } else {
-    // Image is taller than the canvas, so fit it to the canvas height
+    // Image is taller than canvas — fit to height
     imgDrawH = height;
     imgDrawW = height * aspect;
     imgDrawX = (width - imgDrawW) / 2;
     imgDrawY = 0;
   }
  
-  // Extra check to make sure the image never goes outside the canvas
+  // Make sure the image never overflows the canvas
   if (imgDrawH > height) {
     imgDrawH = height;
     imgDrawW = height * aspect;
     imgDrawX = (width - imgDrawW) / 2;
     imgDrawY = 0;
   }
+ 
+  // Calculate how many tile columns and rows fit in the image area
+  // Used by TimeBased for the wave transition
+  numCols = floor(imgDrawW / tileSize);
+  numRows = floor(imgDrawH / tileSize);
 }
  
-function draw() {
-  background(20);
- 
-  // Draw the original Adele image as the bottom layer
-  // The base image switches to The Kiss once enough tiles have flipped
-  if (tiles.length > 0 && tiles[0].flipProgress < 0.5) {
-    image(imgAdele, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
-  } else {
-    image(imgKiss, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
-  }
- 
-  // Update the flip animation and user interaction every frame
-  updateFlipProgress();
-  updateUserInput();
- 
-  // Draw all the mosaic circles on top of the base image
-  for (let i = 0; i < tiles.length; i++) {
-    drawTile(tiles[i]);
-  }
-}
- 
-// Creates all the tile objects and stores them in the tiles array
+// This function creates all the tile objects and fills the tiles array
 function buildTiles() {
   tiles = [];
  
@@ -88,9 +72,14 @@ function buildTiles() {
       let gShift = random(-10, 10);
       let bShift = random(-8, 8);
  
+      // Derive col/row index from pixel position for the wave transition
+      let col = floor((x - imgDrawX) / tileSize);
+      let row = floor((y - imgDrawY) / tileSize);
+ 
       // Store everything about this tile as one object
       tiles.push({
         x, y,
+        col, row,
         drawnSize:    cellSize,
         colourAdele:  colourFromAdele,
         colourKiss:   colourFromKiss,
@@ -117,10 +106,11 @@ function drawTile(tile) {
   b = constrain(b + tile.bShift, 0, 255);
  
   // 250 out of 255 opacity — nearly opaque so colours stay rich
-  fill(r, g, b, 250);
+  fill(r, g, b);
  
   // Draw the circle in the centre of its grid cell
-  circle(tile.x + tileSize / 2, tile.y + tileSize / 2, tile.drawnSize);
+  let s = tile.displaySize || tile.drawnSize;
+  circle(tile.x + tileSize / 2, tile.y + tileSize / 2, s);
 }
  
 // Called by the User Input teammate when the mouse interacts with the canvas

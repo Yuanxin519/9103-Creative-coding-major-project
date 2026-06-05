@@ -1,48 +1,67 @@
-// We need variables to hold our two source images
+// Main sketch file — controls the overall flow of the project
+// All shared variables are declared here so every other file can access them
+ 
 let imgAdele;
 let imgKiss;
  
-// We will store all the tile objects in an array
 let tiles = [];
  
-// This controls the base size of each tile in pixels
-// Try changing this value to make the mosaic coarser or finer
+// Base size of each tile in pixels
 let tileSize = 12;
  
-// This controls how zoomed in the Perlin noise is
-// Smaller values = smoother variation, larger values = more chaotic
+// Controls how smooth the Perlin noise is across the canvas
 let noiseScale = 0.04;
  
-// We will store the draw properties of the image so we can sample it correctly
+// These store where and how big the image is drawn on the canvas
 let imgDrawX, imgDrawY, imgDrawW, imgDrawH;
  
-// Let's load both images before setup runs
+// These store how many columns and rows of tiles fit on the canvas
+// Used by TimeBased for the wave transition
+let numCols, numRows;
+ 
+// Load both images before the sketch starts
 function preload() {
   imgAdele = loadImage('assets/Adele_Bloch-Bauer_I.jpg');
   imgKiss  = loadImage('assets/The-Kiss.jpg');
-  preloadAudio();
 }
  
 function setup() {
   createCanvas(windowWidth, windowHeight);
- 
-  // We use RGB colour mode throughout to keep things simple and consistent
   colorMode(RGB, 255);
   noStroke();
  
-  // Give a same size to two picture
+  // Resize both images to the same size so they line up correctly when blending
   imgAdele.resize(800, 0);
   imgKiss.resize(800, 0);
-
-  // Calculate the draw area for the image so it fits the canvas without distortion
+ 
+  // Work out where to draw the image on the canvas
   calculateImageDrawProps();
  
-  // Build all the tiles and store them in the array
+  // Create all the tile objects
   buildTiles();
+ 
+  // Initialise each teammate's mechanic
   initUserInput();
   setupAudio();
-  createAudioButton();
- 
-  
 }
  
+function draw() {
+  background(20);
+  updateTimeBased();
+  updateUserInput();
+  drawAudio();
+
+  for (let i = 0; i < tiles.length; i++) {
+    drawTile(tiles[i]);
+  }
+
+  drawCountdown();
+}
+ 
+// Rebuild the tile grid whenever the browser window is resized
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  calculateImageDrawProps();
+  buildTiles();
+  initUserInput();
+}
