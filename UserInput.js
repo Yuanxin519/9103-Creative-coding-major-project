@@ -5,7 +5,7 @@
 
 // Adjustable parameters
 const HOVER_RADIUS = 80;   // Mouse influence radius (px)
-const BULGE_SCALE  = 1.8;  // Maximum expansion multiplier
+const BULGE_SCALE  = 2;  // Maximum expansion multiplier
 const LERP_SPEED   = 0.2; // Easing speed
 
 // Call once in setup(), after buildTiles().
