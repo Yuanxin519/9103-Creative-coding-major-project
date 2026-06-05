@@ -1,27 +1,14 @@
-// ============================================================
-// TimeBased.js
-// Mosaic transition between two Klimt paintings driven by time.
-// After a 10-second idle, a column-by-column (or row-by-row) wave
-// sweeps all tiles to reveal the other image in ~3-5 seconds.
-// The loop then repeats indefinitely.
-// ============================================================
+// Mosaic transition between two artworks driven by time.
 
-let imgAdele, imgKiss;
-let tiles = [];
-let tileSize  = 12;
-let noiseScale = 0.04;
-let numCols, numRows;
-let imgDrawX, imgDrawY, imgDrawW, imgDrawH;
-
-// Transition state
+// Transition logic
 let transitionActive = false;
 let transitionStart  = 0;
 let showingKiss      = false;  // false = Adele on screen, true = The Kiss on screen
 let idleStart        = 0;      // frameCount when the current idle period began
-let useColumns       = true;   // true = L→R column wave, false = T→B row wave
+let useColumns       = true;   // true = L to R column wave, false = T to B row wave
 
 const IDLE_FRAMES = 360;  // 6 seconds at 60 fps before each switch
-const CYCLE_COUNT = 1;    // one full sweep per transition (~3 sec)
+const CYCLE_COUNT = 1;    // one full sweep per transition (3 sec)
 
 // Load both images before setup runs
 function preload() {
