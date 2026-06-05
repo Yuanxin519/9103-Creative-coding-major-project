@@ -82,3 +82,4 @@ https://p5js.org/reference/p5/windowResized/
 2. Move the mouse over the artwork to change the size of the circle mosaic.
 3. Move the mouse vertically to control volume.
 4. Move the mouse horizontally to control stereo pan.
+5. Circular mosaic beats to music
