@@ -64,6 +64,7 @@ Handles the sound layer of the project. A background music track is loaded and c
 
 
 ## AI Acknowledgement
+We used AI (mainly Claude) as a support tool to help integrate my audio mechanic with the other team members’ modules. At first, my audio code worked on its own but failed when combined with the PerlinNoise, TimeBased, and UserInput systems. AI helped me identify the cause of the conflict and suggested adjustments to the order of function calls and initialisation, which resolved the issue and allowed all mechanics to run together smoothly. AI also assisted in simplifying parts of my script, making the final Audio.js cleaner and easier to maintain.
 Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
 
@@ -81,6 +82,8 @@ img.resize() is used to normalize two images to the same dimensions before sampl
 https://p5js.org/reference/p5.Image/resize/
 windowResized() — Used to rebuild the tile grid when the browser window changes size. Reference: 
 https://p5js.org/reference/p5/windowResized/
+Audio Download: Sterio18. (2019). Soft Piano Loop [Sound file]. Freesound. Reference: 
+https://freesound.org/people/Sterio18/sounds/472903/
 
 
 ## Interaction Instructions
