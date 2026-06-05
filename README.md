@@ -69,12 +69,15 @@ Claude is used to assist with generating and debugging code in perlinNoise.js. C
 
 
 ## External References
-Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing: 
+Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing:
 https://editor.p5js.org/chrsgrbr/sketches/mLNDLCYys
+
 img.resize() is used to normalize two images to the same dimensions before sampling. Reference: 
 https://p5js.org/reference/p5.Image/resize/
+
 windowResized() — Used to rebuild the tile grid when the browser window changes size. Reference: 
 https://p5js.org/reference/p5/windowResized/
+
 Audio Download: Sterio18. (2019). Soft Piano Loop [Sound file]. Freesound. Reference: 
 https://freesound.org/people/Sterio18/sounds/472903/
 
