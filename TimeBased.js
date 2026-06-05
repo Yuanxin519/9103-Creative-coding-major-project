@@ -25,11 +25,13 @@ function setup() {
   imgKiss.resize(800, 0);
   calculateImageDrawProps();
   buildTiles();
+  initUserInput();
 }
 
 function draw() {
   background(20);
   updateTimeBased();
+  updateUserInput();
   // for...of traversal draws every tile each frame
   for (let tile of tiles) {
     drawTile(tile);
@@ -177,4 +179,5 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   calculateImageDrawProps();
   buildTiles();
+  initUserInput();
 }
