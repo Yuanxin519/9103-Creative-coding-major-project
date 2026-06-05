@@ -53,38 +53,3 @@ function updateUserInput() {
     }
   }
 }
- 
-
-// Replaces the teammate's rect-based drawTile with a circle version.
-// The colour blending logic is identical — only the shape changes.
-// Because JavaScript uses the last definition of a function, this override
-// takes effect as long as user_input.js is loaded after the main sketch file.
-function drawTile(tile) {
- 
-  // Blend between Adele and The Kiss based on flipProgress
-  // flipProgress = 0 → Adele only; flipProgress = 1 → The Kiss only
-  let r = lerp(tile.colourAdele[0], tile.colourKiss[0], tile.flipProgress);
-  let g = lerp(tile.colourAdele[1], tile.colourKiss[1], tile.flipProgress);
-  let b = lerp(tile.colourAdele[2], tile.colourKiss[2], tile.flipProgress);
- 
-  // Apply the per-tile colour shift (gold leaf variation from main sketch)
-  r = constrain(r + tile.rShift, 0, 255);
-  g = constrain(g + tile.gShift, 0, 255);
-  b = constrain(b + tile.bShift, 0, 255);
- 
-  fill(r, g, b);
-  noStroke();
- 
-  // Draw as a circle using displaySize (the animated size from updateUserInput)
-  // Falls back to drawnSize if initUserInput() has not been called yet
-    let s;
-  if (tile.displaySize) {
-    s = tile.displaySize;
-  } else {
-    s = tile.drawnSize;
-  }
-
-  let cx = tile.x + tileSize / 2;
-  let cy = tile.y + tileSize / 2;
-  circle(cx, cy, s);
-}
