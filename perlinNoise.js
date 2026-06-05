@@ -74,9 +74,16 @@ function calculateImageDrawProps() {
  
 function draw() {
   background(20);
+  
+  if (tiles.length > 0 && tiles[0].flipProgress < 0.5) {
+    image(imgAdele, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
+  } else {
+    image(imgKiss, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
+  }
+  
   updateFlipProgress();
   updateUserInput();
-  // Loop through every tile and draw it
+  
   for (let i = 0; i < tiles.length; i++) {
     drawTile(tiles[i]);
   }
