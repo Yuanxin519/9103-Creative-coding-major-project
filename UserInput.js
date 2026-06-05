@@ -36,8 +36,7 @@ function updateUserInput() {
       // Smoothstep falloff: tiles closest to the mouse bulge the most
       // The formula produces a smooth S-curve between 0 and 1
       // ref: Perlin noise smooth transition from sketch3.js
-      let falloff = 1 - d / HOVER_RADIUS;
-      let ease    = falloff * falloff * (3 - 2 * falloff);
+      let ease = map(d, 0, HOVER_RADIUS, 1, 0);
  
       // Scale the tile up toward BULGE_SCALE based on proximity
       let target    = t.baseSize * (1 + (BULGE_SCALE - 1) * ease);
@@ -78,7 +77,13 @@ function drawTile(tile) {
  
   // Draw as a circle using displaySize (the animated size from updateUserInput)
   // Falls back to drawnSize if initUserInput() has not been called yet
-  let s  = tile.displaySize || tile.drawnSize;
+    let s;
+  if (tile.displaySize) {
+    s = tile.displaySize;
+  } else {
+    s = tile.drawnSize;
+  }
+
   let cx = tile.x + tileSize / 2;
   let cy = tile.y + tileSize / 2;
   circle(cx, cy, s);
