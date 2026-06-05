@@ -6,12 +6,9 @@
 // The loop then repeats indefinitely.
 // ============================================================
 
-let imgAdele, imgKiss;
-let tiles = [];
-let tileSize  = 12;
-let noiseScale = 0.04;
+
 let numCols, numRows;
-let imgDrawX, imgDrawY, imgDrawW, imgDrawH;
+
 
 // Transition state
 let transitionActive = false;
@@ -38,11 +35,13 @@ function setup() {
   imgKiss.resize(800, 0);
   calculateImageDrawProps();
   buildTiles();
+  initUserInput()
 }
 
 function draw() {
   background(20);
   updateTimeBased();
+  updateUserInput();
   // for...of traversal draws every tile each frame
   for (let tile of tiles) {
     drawTile(tile);
