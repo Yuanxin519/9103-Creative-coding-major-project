@@ -66,6 +66,10 @@ We used AI (mainly Claude) as a support tool to help integrate my audio mechanic
 
 Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
+Claude is used to assist in developing the state-machine structure and the wave-timing pattern (elapsed % interval === tileIndex) in TimeBased.js.
+
+
+
 
 ## External References
 Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing:
