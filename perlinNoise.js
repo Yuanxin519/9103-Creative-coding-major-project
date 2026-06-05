@@ -29,6 +29,10 @@ function setup() {
   colorMode(RGB, 255);
   noStroke();
  
+  // Give a same size to two picture
+  imgAdele.resize(800, 0);
+  imgKiss.resize(800, 0);
+  
   // Calculate the draw area for the image so it fits the canvas without distortion
   calculateImageDrawProps();
  
@@ -36,9 +40,7 @@ function setup() {
   buildTiles();
   initUserInput();
 
-  // Give a same size to two picture
-  imgAdele.resize(800, 0);
-  imgKiss.resize(800, 0);
+  
 }
  
 // This function works out how to fit the image onto the canvas while keeping its proportions
@@ -135,7 +137,7 @@ function drawTile(tile) {
   g = constrain(g + tile.gShift, 0, 255);
   b = constrain(b + tile.bShift, 0, 255);
  
-  fill(r, g, b, 210);
+  fill(r, g, b);
  
   // Draw the circle centred within its grid cell
   circle(tile.x + tileSize / 2, tile.y + tileSize / 2, tile.drawnSize);
