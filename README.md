@@ -35,7 +35,7 @@ drawCountdown() shows a live second counter with push() / pop() to isolate text 
 
 - `map(d, 0, HOVER_RADIUS, 1, 0)` produces a smooth proximity falloff so tiles closest to the cursor bulge most.
 
-- Setting `tile.flipped = true` triggers update `FlipProgress()`, revealing The Kiss under the cursor.
+- Setting `tile.flipped = true` triggers `updateFlipProgress()`, revealing the other picture under the cursor.
 
 ### Audio Mechanic
 - `fft.analyze()` returns 128 frequency-band energy values each frame; each tile maps to one frequency bin.
@@ -62,11 +62,23 @@ Your text...
 
 
 ## AI Acknowledgement
-- Our Team acknowleged of using 
+We used AI (mainly Claude) as a support tool to help integrate my audio mechanic with the other team members’ modules. At first, my audio code worked on its own but failed when combined with the PerlinNoise, TimeBased, and UserInput systems. AI helped me identify the cause of the conflict and suggested adjustments to the order of function calls and initialisation, which resolved the issue and allowed all mechanics to run together smoothly. AI also assisted in simplifying parts of my script, making the final Audio.js cleaner and easier to maintain.
+
+Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
 
 ## External References
-Your text...
+Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing:
+https://editor.p5js.org/chrsgrbr/sketches/mLNDLCYys
+
+img.resize() is used to normalize two images to the same dimensions before sampling. Reference: 
+https://p5js.org/reference/p5.Image/resize/
+
+windowResized() — Used to rebuild the tile grid when the browser window changes size. Reference: 
+https://p5js.org/reference/p5/windowResized/
+
+Audio Download: Sterio18. (2019). Soft Piano Loop [Sound file]. Freesound. Reference: 
+https://freesound.org/people/Sterio18/sounds/472903/
 
 
 ## Interaction Instructions
