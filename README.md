@@ -52,7 +52,7 @@ drawCountdown() shows a live second counter with push() / pop() to isolate text 
 I was responsible for the basic visual system of the project. The most basic mosaic grid is directly set up, and circles on the canvas are drawn through color sampling. The tile arrays created within this mechanism and the FlipProgress system act as shared data structures that all other mechanisms (time-based, audio, and user input) can read and write to.
 
 ### Xiaorong Dang – TimeBased
-There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
+Xiaorong Dang: There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
 
 ### Liqi Lu – UserInput
 Responsible for the interactive mouse-based behaviour of the mosaic. This mechanic uses distance calculations and interpolation to create a ripple effect when the cursor moves across the artwork.
