@@ -39,7 +39,8 @@ function setup() {
   // Build all the tiles and store them in the array
   buildTiles();
   initUserInput();
-
+  setupAudio();
+ 
   
 }
  
