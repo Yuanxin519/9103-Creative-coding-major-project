@@ -19,6 +19,7 @@ function initUserInput() {
 // Per-frame update: call in draw() after updateFlipProgress()
 function updateUserInput() {
   for (let t of tiles) {
+
     // Calculate the centre coordinates of this tile
     let cx = t.x + tileSize / 2;
     let cy = t.y + tileSize / 2;
@@ -29,23 +30,19 @@ function updateUserInput() {
 
     if (d < HOVER_RADIUS) {
       // Smoothstep falloff: tiles closer to the mouse expand more
-      // Reference: Perlin noise smooth transition idea from sketch3.js
-      let falloff = 1 - d / HOVER_RADIUS;
-      let ease    = falloff * falloff * (3 - 2 * falloff);
+      let scale = map(d, 0, HOVER_RADIUS, BULGE_SCALE, 1);
+      targetSize = t.baseSize * scale;
 
-      // Calculate the target size based on distance from mouse
-      let target = t.baseSize * (1 + (BULGE_SCALE - 1) * ease);
-
-      // Lerp toward the target size for a smooth expansion
-      // Reference: squareSize lerp easing in sketch.js
-      t.displaySize = lerp(t.displaySize, target, LERP_SPEED);
-
-      // Trigger the flip — connects to the time-based teammate's updateFlipProgress()
+      // Also trigger the image-reveal flip for the time-based teammate
       t.flipped = true;
 
     } else {
-      // Mouse has left — lerp back to the original tile size
-      t.displaySize = lerp(t.displaySize, t.baseSize, LERP_SPEED);
+      // Mouse is out of range — return to original size
+      targetSize = t.baseSize;
     }
+
+    // lerp() eases toward the target smoothly each frame
+    // (the tutorial applies scale instantly; lerp makes it feel animated)
+    t.displaySize = lerp(t.displaySize, targetSize, LERP_SPEED);
   }
 }
