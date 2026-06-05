@@ -33,14 +33,21 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(RGB, 255);
   noStroke();
-  numCols = floor(width  / tileSize);
-  numRows = floor(height / tileSize);
+  // Normalize both images first so sampling and aspect ratio use the same dimensions
+  imgAdele.resize(800, 0);
+  imgKiss.resize(800, 0);
   calculateImageDrawProps();
   buildTiles();
 }
 
 function draw() {
   background(20);
+  // Draw base image behind circles so alpha-210 tiles inherit the painting's warmth
+  if (showingKiss) {
+    image(imgKiss,  imgDrawX, imgDrawY, imgDrawW, imgDrawH);
+  } else {
+    image(imgAdele, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
+  }
   updateTimeBased();
   // for...of traversal draws every tile each frame
   for (let tile of tiles) {
@@ -65,52 +72,48 @@ function calculateImageDrawProps() {
     imgDrawX = (width - imgDrawW) / 2;
     imgDrawY = 0;
   }
+  // Number of tile strips that fit inside the image draw area
+  numCols = floor(imgDrawW / tileSize);
+  numRows = floor(imgDrawH / tileSize);
 }
 
 // Create all tile objects with colour samples from both images
 function buildTiles() {
   tiles = [];
 
-  for (let col = 0; col < numCols; col++) {
-    for (let row = 0; row < numRows; row++) {
-      let x = col * tileSize;
-      let y = row * tileSize;
+  for (let x = imgDrawX; x < imgDrawX + imgDrawW; x += tileSize) {
+    for (let y = imgDrawY; y < imgDrawY + imgDrawH; y += tileSize) {
+      let imgX = floor(map(x, imgDrawX, imgDrawX + imgDrawW, 0, imgAdele.width));
+      let imgY = floor(map(y, imgDrawY, imgDrawY + imgDrawH, 0, imgAdele.height));
+      imgX = constrain(imgX, 0, imgAdele.width  - 1);
+      imgY = constrain(imgY, 0, imgAdele.height - 1);
 
-      // Perlin noise gives each tile a slightly varied drawn size
-      let noiseVal  = noise(col * noiseScale, row * noiseScale);
-      let drawnSize = map(noiseVal, 0, 1, tileSize * 0.7, tileSize * 1.1);
+      let colourFromAdele = imgAdele.get(imgX, imgY);
+      let colourFromKiss  = imgKiss.get(imgX, imgY);
 
-      // Sample the pixel colour at this grid position from both images
-      let colourFromAdele = [20, 20, 20, 255];
-      let colourFromKiss  = [20, 20, 20, 255];
+      // Circle size driven by Adele pixel brightness + Perlin noise
+      let brightness = (colourFromAdele[0] + colourFromAdele[1] + colourFromAdele[2]) / 3;
+      let noiseVal   = noise(x * noiseScale, y * noiseScale);
+      let cellSize   = map(brightness, 0, 255, tileSize, tileSize * 0.85);
+      cellSize = cellSize + map(noiseVal, 0, 1, -1, 1);
+      cellSize = constrain(cellSize, 1, tileSize);
 
-      if (x >= imgDrawX && x < imgDrawX + imgDrawW &&
-          y >= imgDrawY && y < imgDrawY + imgDrawH) {
-        let imgX = floor(map(x, imgDrawX, imgDrawX + imgDrawW, 0, imgAdele.width));
-        let imgY = floor(map(y, imgDrawY, imgDrawY + imgDrawH, 0, imgAdele.height));
-        imgX = constrain(imgX, 0, imgAdele.width  - 1);
-        imgY = constrain(imgY, 0, imgAdele.height - 1);
-        colourFromAdele = imgAdele.get(imgX, imgY);
-        colourFromKiss  = imgKiss.get(imgX, imgY);
-      }
-
-      // Stable per-tile colour shift using a fixed random seed
-      randomSeed(col * 1000 + row);
+      randomSeed(floor(x) * 1000 + floor(y));
       let rShift = random(-15, 15);
       let gShift = random(-10, 10);
-      let bShift = random(-8,   8);
+      let bShift = random(-8, 8);
+
+      // Derive col/row index from pixel position for the wave transition
+      let col = floor((x - imgDrawX) / tileSize);
+      let row = floor((y - imgDrawY) / tileSize);
 
       tiles.push({
-        x:           x,
-        y:           y,
-        col:         col,          // column index — used for L→R wave
-        row:         row,          // row index    — used for T→B wave
-        drawnSize:   drawnSize,
-        colourAdele: colourFromAdele,
-        colourKiss:  colourFromKiss,
-        rShift:      rShift,
-        gShift:      gShift,
-        bShift:      bShift,
+        x, y,
+        col, row,                  // col = L→R wave index, row = T→B wave index
+        drawnSize:    cellSize,
+        colourAdele:  colourFromAdele,
+        colourKiss:   colourFromKiss,
+        rShift, gShift, bShift,
         flipProgress: 0            // 0 = showing Adele colour, 1 = showing Kiss colour
       });
     }
@@ -127,9 +130,8 @@ function drawTile(tile) {
   g = constrain(g + tile.gShift, 0, 255);
   b = constrain(b + tile.bShift, 0, 255);
 
-  fill(r, g, b);
-  let offset = (tileSize - tile.drawnSize) / 2;
-  rect(tile.x + offset, tile.y + offset, tile.drawnSize, tile.drawnSize, 2);
+  fill(r, g, b, 210);
+  circle(tile.x + tileSize / 2, tile.y + tileSize / 2, tile.drawnSize);
 }
 
 // Core time loop: 10-sec idle → wave transition → 10-sec idle → ...
@@ -145,16 +147,20 @@ function updateTimeBased() {
 
   // elapsed = frames since this transition started
   let elapsed  = frameCount - transitionStart;
-  let target   = showingKiss ? 0 : 1;  // transition toward the image not currently shown
+  // transition toward the image not currently shown
+  let target;
+  if (showingKiss) { target = 0; } else { target = 1; }
 
   // interval = total strips in this wave direction
-  let interval = useColumns ? numCols : numRows;
+  let interval;
+  if (useColumns) { interval = numCols; } else { interval = numRows; }
 
   // frameCount % interval == tileIndex pattern:
   // elapsed % interval selects exactly one column (or row) strip per frame,
   // creating a left-to-right (or top-to-bottom) rolling wave
   for (let tile of tiles) {
-    let tileIndex = useColumns ? tile.col : tile.row;
+    let tileIndex;
+    if (useColumns) { tileIndex = tile.col; } else { tileIndex = tile.row; }
     if (elapsed % interval === tileIndex) {
       tile.flipProgress = lerp(tile.flipProgress, target, 0.95);
     }
@@ -188,8 +194,6 @@ function drawCountdown() {
 // Rebuild the grid whenever the browser window is resized
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  numCols = floor(width  / tileSize);
-  numRows = floor(height / tileSize);
   calculateImageDrawProps();
   buildTiles();
 }
