@@ -5,6 +5,20 @@ Our project was inspired by Gustav Klimt's artworks, particularly Portrait of Ad
 
 We also drew inspiration from generative art practices that reconstruct images through repeated geometric elements. These influences led us to create a mosaic system where individual circles act as visual building blocks that gradually transform one artwork into another through interaction, sound, and time.
 
+- **Inspiration Source 1**
+
+![Inspiration 1](assets\IMG_7507.jpg) 
+![Inspiration 1](assets\IMG_7508.jpg) 
+[Circle-based Mapping](http://xhslink.com/o/1wdzVf95Whq)
+
+- **Inspiration Source 2**
+
+![Inspiration 2](assets\IMG_7509.jpg) 
+![Inspiration 2](assets\IMG_7510.jpg) 
+[Liquid Fabric](http://xhslink.com/o/AtaZVKtxsUq)
+
+---
+
 ## Techniques
 
 ### Image Mosaic (PerlinNoise)
