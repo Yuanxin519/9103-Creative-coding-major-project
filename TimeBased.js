@@ -48,14 +48,21 @@ function updateTimeBased() {
       tile.flipProgress = lerp(tile.flipProgress, target, 0.1);
     }
 
-    let allDone = tiles.every(t => abs(t.flipProgress - target) < 0.01);
+    let allDone = true;
+    
+    for (let i = 0; i < tiles.length; i++) {
+      if (abs(tiles[i].flipProgress - target) >= 0.01) {
+        allDone = false;
+  }
+}
+    
     if (allDone) {
       for (let tile of tiles) {
         tile.flipProgress = target;
       }
-      showingKiss      = !showingKiss;
+      showingKiss = !showingKiss;
       transitionActive = false;
-      idleStart        = frameCount;
+      idleStart = frameCount;
     }
   }
 }

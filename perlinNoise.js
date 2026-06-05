@@ -1,3 +1,8 @@
+// Perlin Noise & Randomness Mechanic
+// Responsible for building the mosaic tile grid,
+// sampling colours from both source images,
+// and controlling circle size using brightness and Perlin noise.
+ 
 // This function works out how to fit the image onto the canvas while keeping its proportions
 // This is the same approach used in the tutorial code for image display
 function calculateImageDrawProps() {
@@ -51,11 +56,14 @@ function buildTiles() {
  
       // Calculate brightness by averaging the R, G, B values
       // Dark pixels get larger circles, bright pixels get smaller ones
-      // This is inspired by halftone printing technique
+      // This technique is inspired by halftone printing, where dot size
+      // controls how light or dark an area appears
+      // Reference: https://editor.p5js.org/chrsgrbr/sketches/mLNDLCYys
       let brightness = (colourFromAdele[0] + colourFromAdele[1] + colourFromAdele[2]) / 3;
       let cellSize = map(brightness, 0, 255, tileSize, tileSize * 0.85);
  
-      // Add a small Perlin noise offset to make the sizes feel more organic
+      // Add a small Perlin noise offset to make the circle sizes feel more organic
+      // noise() returns a smooth value between 0 and 1 based on position
       // Without this the sizes would look too uniform and mechanical
       let noiseValue = noise(x * noiseScale, y * noiseScale);
       cellSize = cellSize + map(noiseValue, 0, 1, -1, 1);
@@ -63,6 +71,7 @@ function buildTiles() {
  
       // Use a fixed random seed based on position so the colour shift
       // stays the same every frame and does not flicker
+      // randomSeed() makes random() give the same result for the same seed
       randomSeed(floor(x) * 1000 + floor(y));
  
       // Small random shifts to each colour channel
@@ -72,11 +81,11 @@ function buildTiles() {
       let gShift = random(-10, 10);
       let bShift = random(-8, 8);
  
-      // Derive col/row index from pixel position for the wave transition
+      // Derive col/row index from pixel position for the TimeBased wave transition
       let col = floor((x - imgDrawX) / tileSize);
       let row = floor((y - imgDrawY) / tileSize);
  
-      // Store everything about this tile as one object
+      // Store everything about this tile as one object and add it to the array
       tiles.push({
         x, y,
         col, row,
@@ -96,6 +105,7 @@ function buildTiles() {
 function drawTile(tile) {
  
   // Mix between Adele colour and Kiss colour depending on how far the flip has gone
+  // lerp() blends smoothly between two values — from tutorial class
   let r = lerp(tile.colourAdele[0], tile.colourKiss[0], tile.flipProgress);
   let g = lerp(tile.colourAdele[1], tile.colourKiss[1], tile.flipProgress);
   let b = lerp(tile.colourAdele[2], tile.colourKiss[2], tile.flipProgress);
@@ -105,11 +115,13 @@ function drawTile(tile) {
   g = constrain(g + tile.gShift, 0, 255);
   b = constrain(b + tile.bShift, 0, 255);
  
-  // 250 out of 255 opacity — nearly opaque so colours stay rich
   fill(r, g, b);
  
-  // Draw the circle in the centre of its grid cell
+  // Use displaySize if UserInput has set it, otherwise fall back to drawnSize
+  // displaySize is added by initUserInput() and animated by updateUserInput()
   let s = tile.displaySize || tile.drawnSize;
+ 
+  // Draw the circle in the centre of its grid cell
   circle(tile.x + tileSize / 2, tile.y + tileSize / 2, s);
 }
  
@@ -138,5 +150,3 @@ function updateFlipProgress() {
     }
   }
 }
- 
-
