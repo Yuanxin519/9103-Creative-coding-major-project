@@ -47,12 +47,6 @@ function setup() {
  
 function draw() {
   background(20);
-
-  // 删掉这整段
-  // let avgFlip = 0;
-  // for (let t of tiles) { ... }
-  // if (avgFlip < 0.5) { image(imgAdele...) } else { image(imgKiss...) }
-
   updateTimeBased();
   updateUserInput();
   drawAudio();
