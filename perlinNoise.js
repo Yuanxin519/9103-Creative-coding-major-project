@@ -68,7 +68,6 @@ function buildTiles() {
       // Calculate brightness by averaging the R, G, B values
       // Dark pixels get larger circles, bright pixels get smaller ones
       // This is inspired by halftone printing technique
-      // Reference: https://p5js.org/examples/repetition-patterns/
       let brightness = (colourFromAdele[0] + colourFromAdele[1] + colourFromAdele[2]) / 3;
       let cellSize = map(brightness, 0, 255, tileSize, tileSize * 0.85);
  
