@@ -35,7 +35,7 @@ We also drew inspiration from generative art practices that reconstruct images t
 
 - `map(d, 0, HOVER_RADIUS, 1, 0)` produces a smooth proximity falloff so tiles closest to the cursor bulge most.
 
-- Setting `tile.flipped = true` triggers `updateFlipProgress()`, revealing The Kiss under the cursor.
+- Setting `tile.flipped = true` triggers `updateFlipProgress()`, revealing the other picture under the cursor.
 
 ### Audio Mechanic
 - `fft.analyze()` returns 128 frequency-band energy values each frame; each tile maps to one frequency bin.
