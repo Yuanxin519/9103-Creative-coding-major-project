@@ -34,6 +34,10 @@ function setup() {
  
   // Build all the tiles and store them in the array
   buildTiles();
+
+  // Give a same size to two picture
+  imgAdele.resize(800, 0);
+  imgKiss.resize(800, 0);
 }
  
 // This function works out how to fit the image onto the canvas while keeping its proportions
