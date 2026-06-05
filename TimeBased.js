@@ -42,12 +42,6 @@ function setup() {
 
 function draw() {
   background(20);
-  // Draw base image behind circles so alpha-210 tiles inherit the painting's warmth
-  if (showingKiss) {
-    image(imgKiss,  imgDrawX, imgDrawY, imgDrawW, imgDrawH);
-  } else {
-    image(imgAdele, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
-  }
   updateTimeBased();
   // for...of traversal draws every tile each frame
   for (let tile of tiles) {
@@ -130,7 +124,7 @@ function drawTile(tile) {
   g = constrain(g + tile.gShift, 0, 255);
   b = constrain(b + tile.bShift, 0, 255);
 
-  fill(r, g, b, 210);
+  fill(r, g, b, 250);
   circle(tile.x + tileSize / 2, tile.y + tileSize / 2, tile.drawnSize);
 }
 
