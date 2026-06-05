@@ -59,8 +59,8 @@ Responsible for the interactive mouse-based behaviour of the mosaic. This mechan
 
 Hovering over a tile also activates its flip state, allowing interaction to initiate the artwork transition process.
 
-### Team Member Name – Audio
-Your text...
+### Carol Tao – Audio
+Handles the sound layer of the project. A background music track is loaded and controlled through a Play/Pause button. Mouse movement adjusts the audio experience: moving vertically changes the volume, while horizontal movement shifts the stereo pan. FFT analysis is used subtly to make tiles gently pulse with the music’s energy, adding rhythmic motion without interfering with other mechanics.
 
 
 ## AI Acknowledgement
