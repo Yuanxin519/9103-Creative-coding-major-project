@@ -20,8 +20,8 @@ let showingKiss      = false;  // false = Adele on screen, true = The Kiss on sc
 let idleStart        = 0;      // frameCount when the current idle period began
 let useColumns       = true;   // true = L→R column wave, false = T→B row wave
 
-const IDLE_FRAMES = 600;  // 10 seconds at 60 fps before each switch
-const CYCLE_COUNT = 2;    // full sweeps per transition (~3-5 sec depending on screen width)
+const IDLE_FRAMES = 360;  // 6 seconds at 60 fps before each switch
+const CYCLE_COUNT = 1;    // one full sweep per transition (~3 sec)
 
 // Load both images before setup runs
 function preload() {
@@ -60,13 +60,6 @@ function calculateImageDrawProps() {
     imgDrawX = 0;
     imgDrawY = (height - imgDrawH) / 2;
   } else {
-    imgDrawH = height;
-    imgDrawW = height * aspect;
-    imgDrawX = (width - imgDrawW) / 2;
-    imgDrawY = 0;
-  }
-
-  if (imgDrawH > height) {
     imgDrawH = height;
     imgDrawW = height * aspect;
     imgDrawX = (width - imgDrawW) / 2;
@@ -163,7 +156,7 @@ function updateTimeBased() {
   for (let tile of tiles) {
     let tileIndex = useColumns ? tile.col : tile.row;
     if (elapsed % interval === tileIndex) {
-      tile.flipProgress = lerp(tile.flipProgress, target, 0.85);
+      tile.flipProgress = lerp(tile.flipProgress, target, 0.95);
     }
   }
 
@@ -179,49 +172,16 @@ function updateTimeBased() {
   }
 }
 
-// Countdown indicator: arc ring in the bottom-right corner
+// Simple countdown number in the bottom-right corner during idle
 function drawCountdown() {
-  const cx = width  - 54;  // centre x
-  const cy = height - 54;  // centre y
-  const r  = 26;           // ring radius
-  const sw = 4;            // stroke weight
-
+  if (transitionActive) return;
+  let secsLeft = ceil((IDLE_FRAMES - (frameCount - idleStart)) / 60);
   push();
-  noFill();
-  strokeWeight(sw);
-  strokeCap(ROUND);
-
-  // Dark background ring
-  stroke(255, 255, 255, 40);
-  ellipse(cx, cy, r * 2, r * 2);
-
-  let progress, labelText;
-
-  if (!transitionActive) {
-    // Idle: arc shrinks as the 10-second countdown ticks down
-    let framesLeft = IDLE_FRAMES - (frameCount - idleStart);
-    progress  = framesLeft / IDLE_FRAMES;            // 1 → 0
-    labelText = str(ceil(framesLeft / 60));          // seconds remaining
-    stroke(220, 180, 80);                            // gold arc during idle
-  } else {
-    // Transition: arc grows to show how far through the switch we are
-    let interval = useColumns ? numCols : numRows;
-    let elapsed  = frameCount - transitionStart;
-    progress  = constrain(elapsed / (interval * CYCLE_COUNT), 0, 1);
-    labelText = useColumns ? '→' : '↓';             // direction hint
-    stroke(180, 220, 255);                           // blue arc during transition
-  }
-
-  // Draw the filled portion of the arc (starts at top, sweeps clockwise)
-  arc(cx, cy, r * 2, r * 2, -HALF_PI, -HALF_PI + TWO_PI * progress);
-
-  // Label in the centre
   noStroke();
-  fill(255, 255, 255, 200);
-  textAlign(CENTER, CENTER);
-  textSize(13);
-  text(labelText, cx, cy);
-
+  fill(255, 255, 255, 180);
+  textAlign(RIGHT, BOTTOM);
+  textSize(18);
+  text(secsLeft, width - 20, height - 20);
   pop();
 }
 
