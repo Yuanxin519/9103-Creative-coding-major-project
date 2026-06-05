@@ -8,13 +8,13 @@ We also drew inspiration from generative art practices that reconstruct images t
 - **Inspiration Source 1**
 
 ![Inspiration 1](assets/IMG_7507.jpg) 
-![Inspiration 1](assets\IMG_7508.jpg) 
+![Inspiration 1](assets/IMG_7508.jpg) 
 [Circle-based Mapping](http://xhslink.com/o/1wdzVf95Whq)
 
 - **Inspiration Source 2**
 
-![Inspiration 2](assets\IMG_7509.jpg) 
-![Inspiration 2](assets\IMG_7510.jpg) 
+![Inspiration 2](assets/IMG_7509.jpg) 
+![Inspiration 2](assets/IMG_7510.jpg) 
 [Liquid Fabric](http://xhslink.com/o/AtaZVKtxsUq)
 
 ---
