@@ -10,8 +10,9 @@ const LERP_SPEED   = 0.2; // Easing speed
 
 // Call once in setup(), after buildTiles().
 // Adds two extra properties to every tile object:
-//   displaySize — the current animated radius used for drawing
-//   baseSize    — the original Perlin-noise size to lerp back to
+// displaySize — the current animated radius used for drawing
+// baseSize    — the original Perlin-noise size to lerp back to
+// This code was generated with the help of Claude
 function initUserInput() {
   for (let t of tiles) {
     t.displaySize = t.drawnSize;
@@ -26,6 +27,7 @@ function initUserInput() {
 function updateUserInput() {
   for (let t of tiles) {
     // Tile centre position on the canvas
+    // This code was generated with the help of Claude
     let cx = t.x + tileSize / 2;
     let cy = t.y + tileSize / 2;
  
@@ -39,6 +41,7 @@ function updateUserInput() {
       let ease = map(d, 0, HOVER_RADIUS, 1, 0);
  
       // Scale the tile up toward BULGE_SCALE based on proximity
+      // This code was generated with the help of Claude
       let target    = t.baseSize * (1 + (BULGE_SCALE - 1) * ease);
       t.displaySize = lerp(t.displaySize, target, LERP_SPEED);
  
