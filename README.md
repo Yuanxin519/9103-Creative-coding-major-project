@@ -51,8 +51,8 @@ drawCountdown() shows a live second counter with push() / pop() to isolate text 
 ### Team Member Name - PerlinNoise
 Your text...
 
-### Team Member Name – TimeBased
-- Xiaorong Dang: There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
+### Xiaorong Dang – TimeBased
+There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
 
 ### Liqi Lu – UserInput
 Responsible for the interactive mouse-based behaviour of the mosaic. This mechanic uses distance calculations and interpolation to create a ripple effect when the cursor moves across the artwork.
