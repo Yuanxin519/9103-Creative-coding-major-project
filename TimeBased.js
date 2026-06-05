@@ -1,6 +1,6 @@
 // Mosaic transition between two artworks driven by time.
  
-// Transition logic
+// Transition logic : is derived from the prompt of AI
 let transitionActive = false;
 let transitionStart  = 0;
 let showingKiss      = false;  // false = Adele on screen, true = The Kiss on screen
@@ -31,7 +31,7 @@ function updateTimeBased() {
   let interval;
   if (useColumns) { interval = numCols; } else { interval = numRows; }
  
-  // frameCount % interval == tileIndex pattern:
+  // frameCount % interval == tileIndex pattern: inspired from AI
   // elapsed % interval selects exactly one column (or row) strip per frame,
   // creating a left-to-right (or top-to-bottom) rolling wave
   for (let tile of tiles) {
@@ -53,8 +53,8 @@ function updateTimeBased() {
     for (let i = 0; i < tiles.length; i++) {
       if (abs(tiles[i].flipProgress - target) >= 0.01) {
         allDone = false;
-  }
-}
+      }
+    }
     
     if (allDone) {
       for (let tile of tiles) {
@@ -71,6 +71,7 @@ function updateTimeBased() {
 function drawCountdown() {
   if (transitionActive) return;
   let secsLeft = ceil((IDLE_FRAMES - (frameCount - idleStart)) / 60);
+
   push();
   noStroke();
   fill(255, 255, 255, 180);
