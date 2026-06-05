@@ -34,6 +34,7 @@ function setup() {
  
   // Build all the tiles and store them in the array
   buildTiles();
+  initUserInput();
 
   // Give a same size to two picture
   imgAdele.resize(800, 0);
@@ -71,11 +72,9 @@ function calculateImageDrawProps() {
  
 function draw() {
   background(20);
-  
-  
-  image(imgAdele, imgDrawX, imgDrawY, imgDrawW, imgDrawH);
-  
-  
+  updateFlipProgress();
+  updateUserInput();
+  // Loop through every tile and draw it
   for (let i = 0; i < tiles.length; i++) {
     drawTile(tiles[i]);
   }
