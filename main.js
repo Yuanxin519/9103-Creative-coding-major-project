@@ -20,6 +20,7 @@ let imgDrawX, imgDrawY, imgDrawW, imgDrawH;
 function preload() {
   imgAdele = loadImage('assets/Adele_Bloch-Bauer_I.jpg');
   imgKiss  = loadImage('assets/The-Kiss.jpg');
+  preloadAudio();
 }
  
 function setup() {
@@ -40,6 +41,7 @@ function setup() {
   buildTiles();
   initUserInput();
   setupAudio();
+  createAudioButton();
  
   
 }
