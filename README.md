@@ -8,15 +8,15 @@ We also drew inspiration from generative art practices that reconstruct images t
 ## Techniques
 
 ### Image Mosaic (PerlinNoise)
-- A double for loop divides the canvas into a grid, creating one tile object per cell via tiles.push({...}).
+- A double for loop divides the canvas into a grid, creating one tile object per cell via `tiles.push({...})`.
 
-- img.get(x, y) samples pixel colour from both paintings, storing colourAdele and colourKiss in each tile.
+- `img.get(x, y)` samples pixel colour from both paintings, storing `colourAdele` and `colourKiss` in each tile.
 
-- Noise() adds organic variation so the grid feels hand-crafted rather than mechanical.
+- `Noise()` adds organic variation so the grid feels hand-crafted rather than mechanical.
 
-- flipProgress (0–1) is the shared property all four mechanics use to blend between the two paintings via lerp().
+- `flipProgress (0–1)` is the shared property all four mechanics use to blend between the two paintings via `lerp()`.
 
-- calculateImageDrawProps() keeps the image correctly fitted at any window size; windowResized() rebuilds the grid automatically.
+- `calculateImageDrawProps()` keeps the image correctly fitted at any window size; `windowResized()` rebuilds the grid automatically.
 
 ### Time-Based Mechanic
 - frameCount drives a repeating cycle: 6 seconds idle → wave transition → 6 seconds idle.
@@ -59,8 +59,8 @@ Responsible for the interactive mouse-based behaviour of the mosaic. This mechan
 
 Hovering over a tile also activates its flip state, allowing interaction to initiate the artwork transition process.
 
-### Team Member Name – Audio
-Your text...
+### Carol Tao – Audio
+Handles the sound layer of the project. A background music track is loaded and controlled through a Play/Pause button. Mouse movement adjusts the audio experience: moving vertically changes the volume, while horizontal movement shifts the stereo pan. FFT analysis is used subtly to make tiles gently pulse with the music’s energy, adding rhythmic motion without interfering with other mechanics.
 
 
 ## AI Acknowledgement
@@ -82,3 +82,4 @@ https://p5js.org/reference/p5/windowResized/
 2. Move the mouse over the artwork to change the size of the circle mosaic.
 3. Move the mouse vertically to control volume.
 4. Move the mouse horizontally to control stereo pan.
+5. Circular mosaic beats to music
