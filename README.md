@@ -29,13 +29,13 @@ We also drew inspiration from generative art practices that reconstruct images t
 drawCountdown() shows a live second counter with push() / pop() to isolate text styling.
 
 ### User Input Mechanic
-- dist(mouseX, mouseY, cx, cy) finds tiles within HOVER_RADIUS (80px) of the cursor each frame.
+- dist(`mouseX`, `mouseY`, `cx`, `cy`) finds tiles within HOVER_RADIUS (80px) of the cursor each frame.
 
-- Tiles inside the radius expand toward baseSize * BULGE_SCALE via lerp(), creating a ripple bulge effect.
+- Tiles inside the radius expand toward `baseSize * BULGE_SCALE` via `lerp()`, creating a ripple bulge effect.
 
-- map(d, 0, HOVER_RADIUS, 1, 0) produces a smooth proximity falloff so tiles closest to the cursor bulge most.
+- `map(d, 0, HOVER_RADIUS, 1, 0)` produces a smooth proximity falloff so tiles closest to the cursor bulge most.
 
-- Setting tile.flipped = true triggers updateFlipProgress(), revealing The Kiss under the cursor.
+- Setting `tile.flipped = true` triggers `updateFlipProgress()`, revealing The Kiss under the cursor.
 
 ### Audio Mechanic
 - fft.analyze() returns 128 frequency-band energy values each frame; each tile maps to one frequency bin.
@@ -54,8 +54,10 @@ Your text...
 ### Team Member Name – TimeBased
 - Xiaorong Dang: There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
 
-### Team Member Name – UserInput
-Your text...
+### Liqi Lu – UserInput
+Responsible for the interactive mouse-based behaviour of the mosaic. This mechanic uses distance calculations and interpolation to create a ripple effect when the cursor moves across the artwork.
+
+Hovering over a tile also activates its flip state, allowing interaction to initiate the artwork transition process.
 
 ### Team Member Name – Audio
 Your text...
