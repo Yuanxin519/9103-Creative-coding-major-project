@@ -62,7 +62,7 @@ function calculateImageDrawProps() {
   numRows = floor(imgDrawH / tileSize);
 }
 
-// Create all tile objects with colour samples from both images
+// Create all tile objects, same as PerlinNoise.js
 function buildTiles() {
   tiles = [];
 
@@ -77,10 +77,10 @@ function buildTiles() {
       let colourFromAdele = imgAdele.get(imgX, imgY);
       let colourFromKiss  = imgKiss.get(imgX, imgY);
 
-      // Circle size driven by Adele pixel brightness + Perlin noise
       let brightness = (colourFromAdele[0] + colourFromAdele[1] + colourFromAdele[2]) / 3;
-      let noiseVal   = noise(x * noiseScale, y * noiseScale);
       let cellSize   = map(brightness, 0, 255, tileSize, tileSize * 0.85);
+      
+      let noiseVal   = noise(x * noiseScale, y * noiseScale);
       cellSize = cellSize + map(noiseVal, 0, 1, -1, 1);
       cellSize = constrain(cellSize, 1, tileSize);
 
@@ -106,21 +106,8 @@ function buildTiles() {
   }
 }
 
-// Blend between Adele and Kiss colours using each tile's flipProgress
-function drawTile(tile) {
-  let r = lerp(tile.colourAdele[0], tile.colourKiss[0], tile.flipProgress);
-  let g = lerp(tile.colourAdele[1], tile.colourKiss[1], tile.flipProgress);
-  let b = lerp(tile.colourAdele[2], tile.colourKiss[2], tile.flipProgress);
 
-  r = constrain(r + tile.rShift, 0, 255);
-  g = constrain(g + tile.gShift, 0, 255);
-  b = constrain(b + tile.bShift, 0, 255);
-
-  fill(r, g, b, 250);
-  circle(tile.x + tileSize / 2, tile.y + tileSize / 2, tile.drawnSize);
-}
-
-// Core time loop: 10-sec idle → wave transition → 10-sec idle → ...
+// Core time loop: 6 sec idle, flip transition over 3 sec, repeat
 function updateTimeBased() {
   // Trigger a new transition once IDLE_FRAMES have passed
   if (!transitionActive && frameCount - idleStart >= IDLE_FRAMES) {
