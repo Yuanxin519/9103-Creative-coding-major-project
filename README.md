@@ -12,7 +12,7 @@ We also drew inspiration from generative art practices that reconstruct images t
 
 - img.get(x, y) samples pixel colour from both paintings, storing colourAdele and colourKiss in each tile.
 
-- Circle size is driven by pixel brightness; noise() adds organic variation so the grid feels hand-crafted rather than mechanical.
+- Noise() adds organic variation so the grid feels hand-crafted rather than mechanical.
 
 - flipProgress (0–1) is the shared property all four mechanics use to blend between the two paintings via lerp().
 
@@ -48,8 +48,8 @@ drawCountdown() shows a live second counter with push() / pop() to isolate text 
 
 ## Mechanic Ownership
 
-### Team Member Name - PerlinNoise
-Your text...
+### Yuanxin Yu - PerlinNoise
+I was responsible for the basic visual system of the project. The most basic mosaic grid is directly set up, and circles on the canvas are drawn through color sampling. The tile arrays created within this mechanism and the FlipProgress system act as shared data structures that all other mechanisms (time-based, audio, and user input) can read and write to.
 
 ### Xiaorong Dang – TimeBased
 There is a time-driven mosaic transition between two artworks. Pausing every 6 seconds, waves sweep across the canvas column by column (or row by row), flipping all the tiles to reveal the other artwork within 3 seconds. Each cycle alternates between left-to-right and top-to-bottom directions. This cycle repeats infinitely.
@@ -64,11 +64,16 @@ Your text...
 
 
 ## AI Acknowledgement
-Your text...
+Claude is used to assist with generating and debugging code in perlinNoise.js. Claude helped build the buildTiles() function and resolved color mode conflicts between HSB and RGB.
 
 
 ## External References
-Your text...
+Circle size based on halftone brightness - A technique for controlling circle size using pixel brightness inspired by halftone printing: 
+https://editor.p5js.org/chrsgrbr/sketches/mLNDLCYys
+img.resize() is used to normalize two images to the same dimensions before sampling. Reference: 
+https://p5js.org/reference/p5.Image/resize/
+windowResized() — Used to rebuild the tile grid when the browser window changes size. Reference: 
+https://p5js.org/reference/p5/windowResized/
 
 
 ## Interaction Instructions
